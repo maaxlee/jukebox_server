@@ -8,6 +8,6 @@ env:
   - IMAGE=testautomationci/jukebox-server:latest
 script:
 - CGO_ENABLED=0 GOARCH=386 go build -ldflags=-s -o jukebox_server
-- docker login -u "$DOCKER_LOGIN" -p "$DOCKER_PASS" --password-stdin
+- docker login -u $DOCKER_LOGIN -p $DOCKER_PASS
 - docker build -t $IMAGE .
 - docker push $IMAGE
