@@ -1,5 +1,15 @@
 language: go
 go:
 - 1.12.5
-script:
-- go build -o jukebox_server
+stages:
+  - build
+  - deploy
+env:
+  - IMAGE=testautomationci/jukebox-server:latest
+build:
+    script: go build -o jukebox_server
+deploy:
+  script:
+    - echo "$DOCKER_PASS" | docker login -u "$DOCKER_USERNAME" --password-stdin
+    - docker build -t $IMAGE .
+    - docker push $IMAGE
