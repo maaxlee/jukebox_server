@@ -7,7 +7,7 @@ stages:
 env:
   - IMAGE=testautomationci/jukebox-server:latest
 script:
-- go build -o jukebox_server
-- echo "$DOCKER_PASS" | docker login -u "$DOCKER_USERNAME" --password-stdin
+- CGO_ENABLED=0 GOARCH=386 go build -ldflags=-s build -o jukebox_server
+- docker login -u "$DOCKER_LOGIN" -p "$DOCKER_PASS"--password-stdin
 - docker build -t $IMAGE .
 - docker push $IMAGE
